@@ -11,8 +11,6 @@ def customer_info(window: Tk):
 
     window_width = 960
     window_height = 540
-    overlay_x = (window_width - 609) / 2
-    overlay_y = (window_height - 337) / 2
 
     canvas = Canvas(
         window,
