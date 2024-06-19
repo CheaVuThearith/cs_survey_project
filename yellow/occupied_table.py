@@ -2,7 +2,7 @@ from pathlib import Path
 from tkinter import Tk, Canvas, Entry, Button, PhotoImage
 
 
-def occupied_table(window: Tk):
+def occupied_table(window: Tk, table_number, number_of_people, status, reserved_by, reserved_until):
     window_width = 960
     window_height = 540
 
@@ -41,21 +41,26 @@ def occupied_table(window: Tk):
     image_1 = canvas.create_image(48.0, 47.119384765625, image=image_image_1)
 
     canvas.create_text(
-        66.0, 41.0, anchor="nw", text="No. 1", fill="#232121", font=("Inter", 12 * -1)
+        66.0,
+        41.0,
+        anchor="nw",
+        text=f"No. {table_number}",
+        fill="#232121",
+        font=("Inter", 12 * -1),
     )
 
     image_image_2 = PhotoImage(file=relative_to_assets("image_2.png"))
     image_2 = canvas.create_image(48.0, 82.0, image=image_image_2)
 
     canvas.create_text(
-        66.0, 75.0, anchor="nw", text="1 - 2", fill="#232121", font=("Inter", 12 * -1)
+        66.0, 75.0, anchor="nw", text=f"{number_of_people}", fill="#232121", font=("Inter", 12 * -1)
     )
 
     canvas.create_text(
         40.0,
         108.0,
         anchor="nw",
-        text="Status: Occupied ",
+        text=f"Status: {status} ",
         fill="#232121",
         font=("Inter", 12 * -1),
     )
@@ -64,7 +69,7 @@ def occupied_table(window: Tk):
         40.0,
         141.0,
         anchor="nw",
-        text="Reserved by: Name",
+        text=f"Reserved by: {reserved_by}",
         fill="#232121",
         font=("Inter", 12 * -1),
     )
@@ -73,7 +78,7 @@ def occupied_table(window: Tk):
         40.0,
         174.0,
         anchor="nw",
-        text="Until: Time",
+        text=f"Until: {reserved_until}",
         fill="#232121",
         font=("Inter", 12 * -1),
     )
@@ -96,7 +101,9 @@ def occupied_table(window: Tk):
     x_button.place(x=904, y=30, width=24, height=24)
 
     image_image_3 = PhotoImage(file=relative_to_assets("image_3.png"))
-    image_3 = canvas.create_image(222.0 + overlay_x, 282.0 + overlay_y + 100, image=image_image_3)
+    image_3 = canvas.create_image(
+        222.0 + overlay_x, 282.0 + overlay_y + 100, image=image_image_3
+    )
 
     entry_image_1 = PhotoImage(file=relative_to_assets("entry_1.png"))
     entry_bg_1 = canvas.create_image(226.0, 282.5, image=entry_image_1)

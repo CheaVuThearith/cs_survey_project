@@ -5,7 +5,7 @@ from typing import Literal
 from customer_info import customer_info
 from functions import overlay
 
-custom_path = Path(__file__).parent / "assets" / "custom"
+custom_path = Path(__file__).parent / "assets" / "info_card"
 
 
 def relative_to_assets(file):

@@ -8,7 +8,7 @@ from vacant_table import vacant_table
 
 def reservations(window, canvas: Canvas):
     OUTPUT_PATH = Path(__file__).parent
-    ASSETS_PATH = OUTPUT_PATH / Path(r"assets\frame0")
+    ASSETS_PATH = OUTPUT_PATH / Path(r"assets\info_page")
 
     def relative_to_assets(path: str) -> Path:
         return ASSETS_PATH / Path(path)
@@ -30,9 +30,11 @@ def reservations(window, canvas: Canvas):
     )
     button_1.place(x=29.0, y=192.5, width=40.0, height=40.0)
 
-    button_image_2 = PhotoImage(file=relative_to_assets("button_2.png"))
+    navbar_customers_image = PhotoImage(
+        file=relative_to_assets("customers_deactivated.png")
+    )
     navbar_customers = Button(
-        image=button_image_2,
+        image=navbar_customers_image,
         borderwidth=0,
         highlightthickness=0,
         command=lambda: navigate(window, customers),
@@ -40,15 +42,17 @@ def reservations(window, canvas: Canvas):
     )
     navbar_customers.place(x=29.0, y=245.5, width=40.0, height=40.0)
 
-    button_image_3 = PhotoImage(file=relative_to_assets("button_3.png"))
-    button_3 = Button(
-        image=button_image_3,
+    navbar_reservations_image = PhotoImage(
+        file=relative_to_assets("reservations_activated.png")
+    )
+    navbar_reservations = Button(
+        image=navbar_reservations_image,
         borderwidth=0,
         highlightthickness=0,
         command=lambda: print("button_3 clicked"),
         relief="flat",
     )
-    button_3.place(x=29.0, y=298.5, width=40.0, height=40.0)
+    navbar_reservations.place(x=29.0, y=298.5, width=40.0, height=40.0)
 
     canvas.create_text(
         118.0,
@@ -132,7 +136,7 @@ def reservations(window, canvas: Canvas):
 
 def customers(window, canvas: Canvas):
     OUTPUT_PATH = Path(__file__).parent
-    ASSETS_PATH = OUTPUT_PATH / Path(r"assets\frame1")
+    ASSETS_PATH = OUTPUT_PATH / Path(r"assets\info_page")
 
     def relative_to_assets(path: str) -> Path:
         return ASSETS_PATH / Path(path)
@@ -154,19 +158,23 @@ def customers(window, canvas: Canvas):
     )
     button_1.place(x=29.0, y=192.5, width=40.0, height=40.0)
 
-    button_image_2 = PhotoImage(file=relative_to_assets("button_2.png"))
-    button_2 = Button(
-        image=button_image_2,
+    navbar_customers_image = PhotoImage(
+        file=relative_to_assets("customers_activated.png")
+    )
+    navbar_customers = Button(
+        image=navbar_customers_image,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("button_2 clicked"),
+        command=lambda: print("navbar_customers clicked"),
         relief="flat",
     )
-    button_2.place(x=29.0, y=245.5, width=40.0, height=40.0)
+    navbar_customers.place(x=29.0, y=245.5, width=40.0, height=40.0)
 
-    button_image_3 = PhotoImage(file=relative_to_assets("button_3.png"))
+    navbar_reservations_image = PhotoImage(
+        file=relative_to_assets("reservations_deactivated.png")
+    )
     navbar_reservations = Button(
-        image=button_image_3,
+        image=navbar_reservations_image,
         borderwidth=0,
         highlightthickness=0,
         command=lambda: navigate(window, reservations),
