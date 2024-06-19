@@ -130,10 +130,8 @@ def tables_page(window, canvas: Canvas):
                 current_page + 1, math.ceil(len(get_data("Tables", limit=100, page=1)) / 3)
             )
         )
-        print(page)
         cards_list = make_cards_tables(window, canvas, page)
         current_page = page
-        print(current_page)
 
     button_image_7 = PhotoImage(file=relative_to_assets("button_7.png"))
     forward_button = Button(
@@ -245,10 +243,8 @@ def customers_page(window, canvas: Canvas):
                 current_page + 1, math.ceil(len(get_data("Customers", limit=100, page=1)) / 3)
             )
         )
-        print(page)
         cards_list = make_cards_customers(window, canvas, page)
         current_page = page
-        print(current_page)
 
     button_image_7 = PhotoImage(file=relative_to_assets("button_7.png"))
     forward_button = Button(
