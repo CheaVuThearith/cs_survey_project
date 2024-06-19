@@ -2,7 +2,8 @@ from pathlib import Path
 from tkinter import Button, Canvas, Entry, PhotoImage
 from functions import navigate, overlay
 from customer_info import customer_info
-from components import create_card
+from components import info_card
+from vacant_table import vacant_table
 
 
 def reservations(window, canvas: Canvas):
@@ -75,113 +76,37 @@ def reservations(window, canvas: Canvas):
         font=("Inter", 16 * -1),
     )
 
-    image_image_3 = PhotoImage(file=relative_to_assets("image_3.png"))
-    image_3 = canvas.create_image(510.0, 227.0, image=image_image_3)
-
-    image_image_4 = PhotoImage(file=relative_to_assets("image_4.png"))
-    image_4 = canvas.create_image(144.0, 200.619384765625, image=image_image_4)
-
-    canvas.create_text(
-        162.0, 194.5, anchor="nw", text="No. 1", fill="#232121", font=("Inter", 12 * -1)
+    card_0 = info_card(
+        type="table",
+        status="Checked Out",
+        top_text="UserName",
+        bottom_text="291 312 322",
+        pos=0,
+        window=window,
+        canvas=canvas,
+    )
+    card_1 = info_card(
+        type="table",
+        status="Checked Out",
+        top_text="UserToptetop_text",
+        bottom_text="291 312 322",
+        pos=1,
+        window=window,
+        canvas=canvas,
+    )
+    card_2 = info_card(
+        type="table",
+        status="Checked Ot",
+        top_text="UserName",
+        bottom_text="291 312 322",
+        pos=2,
+        window=window,
+        canvas=canvas,
     )
 
-    image_image_5 = PhotoImage(file=relative_to_assets("image_5.png"))
-    image_5 = canvas.create_image(144.0, 227.5, image=image_image_5)
-
-    canvas.create_text(
-        162.0, 220.5, anchor="nw", text="1 - 2", fill="#232121", font=("Inter", 12 * -1)
-    )
-
-    canvas.create_text(
-        136.0,
-        245.5,
-        anchor="nw",
-        text="Vacant",
-        fill="#232121",
-        font=("Inter", 12 * -1),
-    )
-
-    image_image_6 = PhotoImage(file=relative_to_assets("image_6.png"))
-    image_6 = canvas.create_image(510.0, 333.0, image=image_image_6)
-
-    button_image_4 = PhotoImage(file=relative_to_assets("button_4.png"))
-    button_4 = Button(
-        image=button_image_4,
-        borderwidth=0,
-        highlightthickness=0,
-        command=lambda: print("button_4 clicked"),
-        relief="flat",
-    )
-    button_4.place(x=761.0, y=319.0, width=125.0, height=29.0)
-
-    image_image_7 = PhotoImage(file=relative_to_assets("image_7.png"))
-    image_7 = canvas.create_image(144.0, 306.619384765625, image=image_image_7)
-
-    canvas.create_text(
-        162.0, 300.5, anchor="nw", text="No. 1", fill="#232121", font=("Inter", 12 * -1)
-    )
-
-    image_image_8 = PhotoImage(file=relative_to_assets("image_8.png"))
-    image_8 = canvas.create_image(144.0, 333.5, image=image_image_8)
-
-    canvas.create_text(
-        162.0, 326.5, anchor="nw", text="1 - 2", fill="#232121", font=("Inter", 12 * -1)
-    )
-
-    canvas.create_text(
-        136.0,
-        351.5,
-        anchor="nw",
-        text="Occupied",
-        fill="#232121",
-        font=("Inter", 12 * -1),
-    )
-
-    image_image_9 = PhotoImage(file=relative_to_assets("image_9.png"))
-    image_9 = canvas.create_image(510.0, 439.0, image=image_image_9)
-
-    image_image_10 = PhotoImage(file=relative_to_assets("image_10.png"))
-    image_10 = canvas.create_image(144.0, 412.619384765625, image=image_image_10)
-
-    button_image_5 = PhotoImage(file=relative_to_assets("button_5.png"))
-    button_5 = Button(
-        image=button_image_5,
-        borderwidth=0,
-        highlightthickness=0,
-        command=lambda: print("button_5 clicked"),
-        relief="flat",
-    )
-    button_5.place(x=761.0, y=424.0, width=125.0, height=29.0)
-
-    canvas.create_text(
-        162.0, 406.5, anchor="nw", text="No. 1", fill="#232121", font=("Inter", 12 * -1)
-    )
-
-    image_image_11 = PhotoImage(file=relative_to_assets("image_11.png"))
-    image_11 = canvas.create_image(144.0, 439.5, image=image_image_11)
-
-    canvas.create_text(
-        162.0, 432.5, anchor="nw", text="1 - 2", fill="#232121", font=("Inter", 12 * -1)
-    )
-
-    canvas.create_text(
-        136.0,
-        457.5,
-        anchor="nw",
-        text="Vacant",
-        fill="#232121",
-        font=("Inter", 12 * -1),
-    )
-
-    button_image_6 = PhotoImage(file=relative_to_assets("button_6.png"))
-    button_6 = Button(
-        image=button_image_6,
-        borderwidth=0,
-        highlightthickness=0,
-        command=lambda: print("button_6 clicked"),
-        relief="flat",
-    )
-    button_6.place(x=761.0, y=213.0, width=125.0, height=29.0)
+    card_0.create_card()
+    card_1.create_card()
+    card_2.create_card()
 
     button_image_7 = PhotoImage(file=relative_to_assets("button_7.png"))
     button_7 = Button(
@@ -274,29 +199,56 @@ def customers(window, canvas: Canvas):
         fill="#000000",
         font=("Inter", 16 * -1),
     )
-    
-    create_card(0,window,canvas)
-    create_card(1,window,canvas)
-    create_card(2,window,canvas)
-   
+
+    card_0 = info_card(
+        type="customer",
+        status="Checked Out",
+        top_text="UserName",
+        bottom_text="291 312 322",
+        pos=0,
+        window=window,
+        canvas=canvas,
+    )
+    card_1 = info_card(
+        type="customer",
+        status="Checked Out",
+        top_text="UserToptetop_text",
+        bottom_text="291 312 322",
+        pos=1,
+        window=window,
+        canvas=canvas,
+    )
+    card_2 = info_card(
+        type="customer",
+        status="Checked Ot",
+        top_text="UserName",
+        bottom_text="291 312 322",
+        pos=2,
+        window=window,
+        canvas=canvas,
+    )
+
+    card_0.create_card()
+    card_1.create_card()
+    card_2.create_card()
 
     button_image_7 = PhotoImage(file=relative_to_assets("button_7.png"))
-    button_7 = Button(
+    forward_button = Button(
         image=button_image_7,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("button_7 clicked"),
+        command=lambda: print("forward_button clicked"),
         relief="flat",
     )
-    button_7.place(x=877.0, y=502.0, width=25.0, height=25.0)
+    forward_button.place(x=877.0, y=502.0, width=25.0, height=25.0)
 
     button_image_8 = PhotoImage(file=relative_to_assets("button_8.png"))
-    button_8 = Button(
+    backwards_button = Button(
         image=button_image_8,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("button_8 clicked"),
+        command=lambda: print("backwards_button clicked"),
         relief="flat",
     )
-    button_8.place(x=849.0, y=502.0, width=25.0, height=25.0)
+    backwards_button.place(x=849.0, y=502.0, width=25.0, height=25.0)
     window.mainloop()
