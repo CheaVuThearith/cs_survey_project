@@ -41,10 +41,3 @@ def delete_cards(cards_list):
 
 
 
-
-
-def forwards():
-    pass
-
-
-
