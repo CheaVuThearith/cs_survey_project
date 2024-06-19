@@ -1,10 +1,11 @@
 from pathlib import Path
-from tkinter import Button, Entry, PhotoImage
+from tkinter import Button, Canvas, Entry, PhotoImage
 from functions import navigate, overlay
 from customer_info import customer_info
+from components import create_card
 
 
-def reservations(window, canvas):
+def reservations(window, canvas: Canvas):
     OUTPUT_PATH = Path(__file__).parent
     ASSETS_PATH = OUTPUT_PATH / Path(r"assets\frame0")
 
@@ -204,7 +205,7 @@ def reservations(window, canvas):
     window.mainloop()
 
 
-def customers(window, canvas):
+def customers(window, canvas: Canvas):
     OUTPUT_PATH = Path(__file__).parent
     ASSETS_PATH = OUTPUT_PATH / Path(r"assets\frame1")
 
@@ -213,6 +214,7 @@ def customers(window, canvas):
 
     window.geometry("960x540")
     window.configure(bg="#F1F1F1")
+
     canvas.place(x=0, y=0)
     image_image_1 = PhotoImage(file=relative_to_assets("image_1.png"))
     image_1 = canvas.create_image(49.0, 265.0, image=image_image_1)
@@ -272,129 +274,11 @@ def customers(window, canvas):
         fill="#000000",
         font=("Inter", 16 * -1),
     )
-
-    image_image_3 = PhotoImage(file=relative_to_assets("image_3.png"))
-    image_3 = canvas.create_image(510.0, 227.0, image=image_image_3)
-
-    image_image_4 = PhotoImage(file=relative_to_assets("image_4.png"))
-    image_4 = canvas.create_image(142.0, 201.0, image=image_image_4)
-
-    image_image_5 = PhotoImage(file=relative_to_assets("image_5.png"))
-    image_5 = canvas.create_image(144.0, 227.0, image=image_image_5)
-
-    canvas.create_text(
-        162.0, 194.5, anchor="nw", text="Name", fill="#232121", font=("Inter", 12 * -1)
-    )
-
-    canvas.create_text(
-        162.0,
-        220.5,
-        anchor="nw",
-        text="023 123 222",
-        fill="#232121",
-        font=("Inter", 12 * -1),
-    )
-
-    canvas.create_text(
-        136.0,
-        245.5,
-        anchor="nw",
-        text="Checked Out",
-        fill="#232121",
-        font=("Inter", 12 * -1),
-    )
-
-    button_image_4 = PhotoImage(file=relative_to_assets("button_4.png"))
-    button_4 = Button(
-        image=button_image_4,
-        borderwidth=0,
-        highlightthickness=0,
-        command=lambda: overlay(window, customer_info),
-        relief="flat",
-    )
-    button_4.place(x=761.0, y=213.0, width=125.0, height=29.0)
-
-    image_image_6 = PhotoImage(file=relative_to_assets("image_6.png"))
-    image_6 = canvas.create_image(510.0, 333.0, image=image_image_6)
-
-    image_image_7 = PhotoImage(file=relative_to_assets("image_7.png"))
-    image_7 = canvas.create_image(142.0, 307.0, image=image_image_7)
-
-    image_image_8 = PhotoImage(file=relative_to_assets("image_8.png"))
-    image_8 = canvas.create_image(144.0, 333.0, image=image_image_8)
-
-    canvas.create_text(
-        162.0, 300.5, anchor="nw", text="Name", fill="#232121", font=("Inter", 12 * -1)
-    )
-
-    canvas.create_text(
-        162.0,
-        326.5,
-        anchor="nw",
-        text="023 123 222",
-        fill="#232121",
-        font=("Inter", 12 * -1),
-    )
-
-    canvas.create_text(
-        136.0,
-        351.5,
-        anchor="nw",
-        text="Checked Out",
-        fill="#232121",
-        font=("Inter", 12 * -1),
-    )
-
-    button_image_5 = PhotoImage(file=relative_to_assets("button_5.png"))
-    button_5 = Button(
-        image=button_image_5,
-        borderwidth=0,
-        highlightthickness=0,
-        command=lambda: print("button_5 clicked"),
-        relief="flat",
-    )
-    button_5.place(x=761.0, y=319.0, width=125.0, height=29.0)
-
-    image_image_9 = PhotoImage(file=relative_to_assets("image_9.png"))
-    image_9 = canvas.create_image(510.0, 439.0, image=image_image_9)
-
-    image_image_10 = PhotoImage(file=relative_to_assets("image_10.png"))
-    image_10 = canvas.create_image(142.0, 413.0, image=image_image_10)
-
-    image_image_11 = PhotoImage(file=relative_to_assets("image_11.png"))
-    image_11 = canvas.create_image(144.0, 439.0, image=image_image_11)
-
-    canvas.create_text(
-        162.0, 406.5, anchor="nw", text="Name", fill="#232121", font=("Inter", 12 * -1)
-    )
-
-    canvas.create_text(
-        162.0,
-        432.5,
-        anchor="nw",
-        text="023 123 222",
-        fill="#232121",
-        font=("Inter", 12 * -1),
-    )
-
-    canvas.create_text(
-        136.0,
-        457.5,
-        anchor="nw",
-        text="Checked Out",
-        fill="#232121",
-        font=("Inter", 12 * -1),
-    )
-
-    button_image_6 = PhotoImage(file=relative_to_assets("button_6.png"))
-    button_6 = Button(
-        image=button_image_6,
-        borderwidth=0,
-        highlightthickness=0,
-        command=lambda: print("button_6 clicked"),
-        relief="flat",
-    )
-    button_6.place(x=761.0, y=425.0, width=125.0, height=29.0)
+    
+    create_card(0,window,canvas)
+    create_card(1,window,canvas)
+    create_card(2,window,canvas)
+   
 
     button_image_7 = PhotoImage(file=relative_to_assets("button_7.png"))
     button_7 = Button(
