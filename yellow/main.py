@@ -1,12 +1,12 @@
-from pages import customers
-from functions import create_canvas, create_window
+from pages import customers_page
+from page_navigation import create_canvas, create_window
 
 
 def main():
     window = create_window()
     canvas = create_canvas(window)
     window.resizable(False, False)
-    customers(window, canvas)
+    customers_page(window, canvas)
 
 
 main()

@@ -1,6 +1,7 @@
 from tkinter import Canvas, Tk
 
 
+
 def create_canvas(window):
     canvas = Canvas(
         window,
@@ -28,5 +29,22 @@ def navigate(window, destination):
     canvas = create_canvas(window)
     destination(window, canvas)
 
+
 def overlay(window, destination):
     destination(window)
+
+
+def delete_cards(cards_list):
+    for card in cards_list:
+        card.destroy_card()
+    cards_list.clear()
+
+
+
+
+
+def forwards():
+    pass
+
+
+

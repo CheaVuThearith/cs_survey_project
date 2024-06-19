@@ -1,12 +1,48 @@
+import math
 from pathlib import Path
 from tkinter import Button, Canvas, Entry, PhotoImage
-from functions import navigate, overlay
-from customer_info import customer_info
+from page_navigation import delete_cards, navigate
 from components import info_card
-from vacant_table import vacant_table
+from sql_integration import get_data
 
 
-def reservations(window, canvas: Canvas):
+def make_cards_customers(window, canvas, page):
+    cards_list = []
+    customers = get_data("Customers", page)
+    for i, customer in enumerate(customers):
+        card = info_card(
+            canvas=canvas,
+            type="customer",
+            window=window,
+            pos=i,
+            top_text=f"{customer["Name"]}",
+            bottom_text=customer["PhoneNumber"],
+            status=customer["Status"],
+        )
+        cards_list.append(card)
+        card.create_card()
+    return cards_list
+
+
+def make_cards_tables(window, canvas, page):
+    cards_list = []
+    tables = get_data("Tables", page)
+    for i, table in enumerate(tables):
+        card = info_card(
+            canvas=canvas,
+            type="table",
+            window=window,
+            pos=i,
+            top_text=f"{table["TableID"]}",
+            bottom_text=table["Capacity"],
+            status=table["Status"],
+        )
+        cards_list.append(card)
+        card.create_card()
+    return cards_list
+
+
+def tables_page(window, canvas: Canvas):
     OUTPUT_PATH = Path(__file__).parent
     ASSETS_PATH = OUTPUT_PATH / Path(r"assets\info_page")
 
@@ -37,7 +73,7 @@ def reservations(window, canvas: Canvas):
         image=navbar_customers_image,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: navigate(window, customers),
+        command=lambda: navigate(window, customers_page),
         relief="flat",
     )
     navbar_customers.place(x=29.0, y=245.5, width=40.0, height=40.0)
@@ -75,66 +111,53 @@ def reservations(window, canvas: Canvas):
         118.0,
         143.0,
         anchor="nw",
-        text="Total tables - 20",
+        text=f"Total tables - {len(get_data("Tables", limit=100, page=1))}",
         fill="#000000",
         font=("Inter", 16 * -1),
     )
 
-    card_0 = info_card(
-        type="table",
-        status="Checked Out",
-        top_text="UserName",
-        bottom_text="291 312 322",
-        pos=0,
-        window=window,
-        canvas=canvas,
-    )
-    card_1 = info_card(
-        type="table",
-        status="Checked Out",
-        top_text="UserToptetop_text",
-        bottom_text="291 312 322",
-        pos=1,
-        window=window,
-        canvas=canvas,
-    )
-    card_2 = info_card(
-        type="table",
-        status="Checked Ot",
-        top_text="UserName",
-        bottom_text="291 312 322",
-        pos=2,
-        window=window,
-        canvas=canvas,
-    )
+    current_page = 1
+    cards_list = make_cards_tables(window, canvas, current_page)
 
-    card_0.create_card()
-    card_1.create_card()
-    card_2.create_card()
+    def paginate_tables(backwards):
+        nonlocal cards_list
+        nonlocal current_page
+        delete_cards(cards_list)
+        page = (
+            max(current_page - 1, 1)
+            if backwards
+            else min(
+                current_page + 1, math.ceil(len(get_data("Tables", limit=100, page=1)) / 3)
+            )
+        )
+        print(page)
+        cards_list = make_cards_tables(window, canvas, page)
+        current_page = page
+        print(current_page)
 
     button_image_7 = PhotoImage(file=relative_to_assets("button_7.png"))
-    button_7 = Button(
+    forward_button = Button(
         image=button_image_7,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("button_7 clicked"),
+        command=lambda: paginate_tables(backwards=False),
         relief="flat",
     )
-    button_7.place(x=877.0, y=502.0, width=25.0, height=25.0)
+    forward_button.place(x=877.0, y=502.0, width=25.0, height=25.0)
 
     button_image_8 = PhotoImage(file=relative_to_assets("button_8.png"))
-    button_8 = Button(
+    backwards_button = Button(
         image=button_image_8,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("button_8 clicked"),
+        command=lambda: paginate_tables(backwards=True),
         relief="flat",
     )
-    button_8.place(x=849.0, y=502.0, width=25.0, height=25.0)
+    backwards_button.place(x=849.0, y=502.0, width=25.0, height=25.0)
     window.mainloop()
 
 
-def customers(window, canvas: Canvas):
+def customers_page(window, canvas: Canvas):
     OUTPUT_PATH = Path(__file__).parent
     ASSETS_PATH = OUTPUT_PATH / Path(r"assets\info_page")
 
@@ -177,7 +200,7 @@ def customers(window, canvas: Canvas):
         image=navbar_reservations_image,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: navigate(window, reservations),
+        command=lambda: navigate(window, tables_page),
         relief="flat",
     )
     navbar_reservations.place(x=29.0, y=298.5, width=40.0, height=40.0)
@@ -203,49 +226,36 @@ def customers(window, canvas: Canvas):
         118.0,
         143.0,
         anchor="nw",
-        text="Total Customers - 20",
+        text=f"Total Customers - {len(get_data("Customers", limit=100, page=1))}",
         fill="#000000",
         font=("Inter", 16 * -1),
     )
 
-    card_0 = info_card(
-        type="customer",
-        status="Checked Out",
-        top_text="UserName",
-        bottom_text="291 312 322",
-        pos=0,
-        window=window,
-        canvas=canvas,
-    )
-    card_1 = info_card(
-        type="customer",
-        status="Checked Out",
-        top_text="UserToptetop_text",
-        bottom_text="291 312 322",
-        pos=1,
-        window=window,
-        canvas=canvas,
-    )
-    card_2 = info_card(
-        type="customer",
-        status="Checked Ot",
-        top_text="UserName",
-        bottom_text="291 312 322",
-        pos=2,
-        window=window,
-        canvas=canvas,
-    )
+    current_page = 1
+    cards_list = make_cards_customers(window, canvas, current_page)
 
-    card_0.create_card()
-    card_1.create_card()
-    card_2.create_card()
+    def paginate_customers(backwards):
+        nonlocal cards_list
+        nonlocal current_page
+        delete_cards(cards_list)
+        page = (
+            max(current_page - 1, 1)
+            if backwards
+            else min(
+                current_page + 1, math.ceil(len(get_data("Customers", limit=100, page=1)) / 3)
+            )
+        )
+        print(page)
+        cards_list = make_cards_customers(window, canvas, page)
+        current_page = page
+        print(current_page)
 
     button_image_7 = PhotoImage(file=relative_to_assets("button_7.png"))
     forward_button = Button(
         image=button_image_7,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("forward_button clicked"),
+        command=lambda: paginate_customers(backwards=False),
         relief="flat",
     )
     forward_button.place(x=877.0, y=502.0, width=25.0, height=25.0)
@@ -255,7 +265,7 @@ def customers(window, canvas: Canvas):
         image=button_image_8,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("backwards_button clicked"),
+        command=lambda: paginate_customers(backwards=True),
         relief="flat",
     )
     backwards_button.place(x=849.0, y=502.0, width=25.0, height=25.0)
