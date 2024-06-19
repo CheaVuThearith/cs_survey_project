@@ -30,14 +30,15 @@ def navigate(window, destination):
     destination(window, canvas)
 
 
-def overlay(window, destination):
-    destination(window)
+def overlay(destination):
+    destination()
 
 
 def delete_cards(cards_list):
     for card in cards_list:
         card.destroy_card()
     cards_list.clear()
+    
 
 
 

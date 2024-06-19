@@ -2,7 +2,16 @@ from pathlib import Path
 from tkinter import Tk, Canvas, Button, PhotoImage
 
 
-def customer_info(window: Tk):
+def customer_info(
+    window: Tk,
+    phone,
+    name,
+    status,
+    timesVisited,
+    timesCanceled,
+    amountSpent,
+    lastVisited,
+):
     OUTPUT_PATH = Path(__file__).parent
     ASSETS_PATH = OUTPUT_PATH / "assets/frame5"
 
@@ -29,7 +38,7 @@ def customer_info(window: Tk):
         63.0,
         112.0,
         anchor="nw",
-        text="099 712 872",
+        text=f"{phone}",
         fill="#232121",
         font=("Inter", 12 * -1),
     )
@@ -41,7 +50,7 @@ def customer_info(window: Tk):
         60.12841796875,
         79.0,
         anchor="nw",
-        text="Name",
+        text=f"{name}",
         fill="#232121",
         font=("Inter", 12 * -1),
     )
@@ -50,7 +59,7 @@ def customer_info(window: Tk):
         40.0,
         145.5,
         anchor="nw",
-        text="Status:  Reserved",
+        text=f"Status: {status}",
         fill="#232121",
         font=("Inter", 12 * -1),
     )
@@ -59,7 +68,7 @@ def customer_info(window: Tk):
         40.0,
         178.5,
         anchor="nw",
-        text="Times Visited: 0  ",
+        text=f"Times Visited: {timesVisited}",
         fill="#232121",
         font=("Inter", 12 * -1),
     )
@@ -68,7 +77,7 @@ def customer_info(window: Tk):
         40.0,
         211.5,
         anchor="nw",
-        text="Times Canceled: ",
+        text=f"Times Canceled: {timesCanceled}",
         fill="#232121",
         font=("Inter", 12 * -1),
     )
@@ -77,7 +86,16 @@ def customer_info(window: Tk):
         40.0,
         244.5,
         anchor="nw",
-        text="Amount Spent: 0",
+        text=f"Amount Spent: {amountSpent}",
+        fill="#232121",
+        font=("Inter", 12 * -1),
+    )
+
+    canvas.create_text(
+        40.0,
+        244.5,
+        anchor="nw",
+        text=f"Last Visited: {lastVisited}",
         fill="#232121",
         font=("Inter", 12 * -1),
     )

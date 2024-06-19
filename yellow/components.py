@@ -3,6 +3,10 @@ from tkinter import Button, Canvas, PhotoImage
 from typing import Literal
 from customer_info import customer_info
 from page_navigation import overlay
+from occupied_table import occupied_table
+from reserved_table import reserved_table
+from vacant_table import vacant_table
+from sql_integration import find_reservation_data
 
 custom_path = Path(__file__).parent / "assets" / "info_card"
 
@@ -16,7 +20,7 @@ CardType = Literal["customer", "table"]
 
 class info_card:
     def __init__(
-        self, pos, top_text, bottom_text, status, window, canvas, type: CardType
+        self, pos, top_text, bottom_text, status, window, canvas, obj, type: CardType
     ) -> None:
         self.background_image = PhotoImage(
             file=relative_to_assets("background_card_image.png")
@@ -41,6 +45,7 @@ class info_card:
         self.window = window
         self.canvas = canvas
         self.canvas: Canvas
+        self.obj = obj
 
     def create_card(self):
         background_x = 510
@@ -95,13 +100,65 @@ class info_card:
             font=("Inter", 12 * -1),
         )
 
+        overlay_map = {
+            "Checked In": lambda: customer_info(
+                phone=self.obj["PhoneNumber"],
+                amountSpent=self.obj["AmountSpent"],
+                lastVisited=self.obj["LastVisited"],
+                name=self.obj["Name"],
+                status=self.obj["Status"],
+                timesCanceled=self.obj["TimesCanceled"],
+                timesVisited=self.obj["TimesVisited"],
+                window=self.window,
+            ),
+            "Checked Out": lambda: customer_info(
+                phone=self.obj["PhoneNumber"],
+                amountSpent=self.obj["AmountSpent"],
+                lastVisited=self.obj["LastVisited"],
+                name=self.obj["Name"],
+                status=self.obj["Status"],
+                timesCanceled=self.obj["TimesCanceled"],
+                timesVisited=self.obj["TimesVisited"],
+                window=self.window,
+            ),
+            "Reserved": lambda: reserved_table(
+                window=self.window,
+                status=self.obj["Status"],
+                endTime=find_reservation_data(TableID=self.obj["TableID"])[
+                    "EndTime"
+                ],
+                capacity=self.obj["Capacity"],
+                reservedBy=find_reservation_data(TableID=self.obj["TableID"])[
+                    "Name"
+                ],
+                tableID=self.obj["TableID"],
+            ),
+            "Vacant": lambda: vacant_table(
+                window=self.window,
+                capacity=self.obj["Capacity"],
+                TableID=self.obj["TableID"],
+            ),
+            "Occupied": lambda: occupied_table(
+                window=self.window,
+                status=self.obj["Status"],
+                endTime=find_reservation_data(TableID=self.obj["TableID"])[
+                    "EndTime"
+                ],
+                capacity=self.obj["Capacity"],
+                reservedBy=find_reservation_data(TableID=self.obj["TableID"])[
+                    "Name"
+                ],
+                tableID=self.obj["TableID"],
+            ),
+        }
+
         more_info_button_x = background_x + 251.0
         more_info_button_y = background_y - 14.0
         more_info_button = Button(
             image=self.more_info_button_image,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: overlay(self.window, customer_info),
+            command=lambda: overlay(overlay_map[self.status]),
             relief="flat",
         )
         more_info_button.place(

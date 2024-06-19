@@ -59,10 +59,21 @@ tables = Literal["Customers", "Employees", "Reservations", "Tables"]
 
 
 def get_data(
-    table: tables, page, limit=3
+    table: tables, page, where, limit=3
 ) -> Union[Reservation_Type, Employee_Type, Table_Type, Customer_Type]:
     conn = make_connection()
     cur: Cursor = conn.cursor(DictCursor)
-    cur.execute(f"select * from {table} limit {limit} offset {3*(page-1)}")
+    command = f"select * from {table} where {where} limit {limit} offset {3*(page-1)}"
+    cur.execute(command)
     conn.close()
     return cur.fetchall()
+
+
+def find_reservation_data(TableID):
+    conn = make_connection()
+    cur: Cursor = conn.cursor(DictCursor)
+    command = f"select Name, EndTime FROM Reservations INNER JOIN Tables ON Reservations.TableID = Tables.TableID INNER JOIN Customers ON Reservations.CustomerID = Customers.CustomerID Where Reservations.TableID = {TableID}"
+    cur.execute(command)
+    conn.close()
+    out = cur.fetchall() 
+    return out

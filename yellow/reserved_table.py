@@ -2,7 +2,7 @@ from pathlib import Path
 from tkinter import Tk, Canvas, Button, PhotoImage
 
 
-def reserved_table(window: Tk):
+def reserved_table(window: Tk, status, endTime, reservedBy, capacity, tableID):
     OUTPUT_PATH = Path(__file__).parent
     ASSETS_PATH = OUTPUT_PATH / Path(r"assets\frame2")
 
@@ -30,21 +30,31 @@ def reserved_table(window: Tk):
     image_1 = canvas.create_image(48.0, 47.119384765625, image=image_image_1)
 
     canvas.create_text(
-        66.0, 41.0, anchor="nw", text="No. 1", fill="#232121", font=("Inter", 12 * -1)
+        66.0,
+        41.0,
+        anchor="nw",
+        text=f"No. {tableID}",
+        fill="#232121",
+        font=("Inter", 12 * -1),
     )
 
     image_image_2 = PhotoImage(file=relative_to_assets("image_2.png"))
     image_2 = canvas.create_image(48.0, 82.0, image=image_image_2)
 
     canvas.create_text(
-        66.0, 75.0, anchor="nw", text="1 - 2", fill="#232121", font=("Inter", 12 * -1)
+        66.0,
+        75.0,
+        anchor="nw",
+        text=f"{capacity}",
+        fill="#232121",
+        font=("Inter", 12 * -1),
     )
 
     canvas.create_text(
         40.0,
         108.0,
         anchor="nw",
-        text="Status: Reserved ",
+        text=f"Status: {status}",
         fill="#232121",
         font=("Inter", 12 * -1),
     )
@@ -53,7 +63,7 @@ def reserved_table(window: Tk):
         40.0,
         141.0,
         anchor="nw",
-        text="Reserved by: Name",
+        text=f"Reserved by: {reservedBy}",
         fill="#232121",
         font=("Inter", 12 * -1),
     )
@@ -62,7 +72,7 @@ def reserved_table(window: Tk):
         40.0,
         174.0,
         anchor="nw",
-        text="Until: Time",
+        text=f"Until: {endTime}",
         fill="#232121",
         font=("Inter", 12 * -1),
     )
