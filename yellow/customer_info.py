@@ -1,3 +1,4 @@
+import datetime
 from pathlib import Path
 from tkinter import Tk, Canvas, Button, PhotoImage
 
@@ -10,7 +11,7 @@ def customer_info(
     timesVisited,
     timesCanceled,
     amountSpent,
-    lastVisited,
+    lastVisited:datetime.datetime,
 ):
     OUTPUT_PATH = Path(__file__).parent
     ASSETS_PATH = OUTPUT_PATH / "assets/frame5"
@@ -86,20 +87,18 @@ def customer_info(
         40.0,
         244.5,
         anchor="nw",
-        text=f"Amount Spent: {amountSpent}",
+        text=f"Amount Spent: ${amountSpent}",
         fill="#232121",
         font=("Inter", 12 * -1),
     )
-
     canvas.create_text(
         40.0,
-        244.5,
+        276,
         anchor="nw",
-        text=f"Last Visited: {lastVisited}",
+        text=f"Last Visited: {lastVisited.date()}",
         fill="#232121",
         font=("Inter", 12 * -1),
     )
-
     def close_overlay():
         canvas.destroy()
         x_button.destroy()

@@ -264,7 +264,10 @@ def customers_page(window, canvas: Canvas):
             if backwards
             else min(
                 current_page + 1,
-                math.ceil(len(get_data("Customers", limit=100, page=1, where="CustomerID")) / 3),
+                math.ceil(
+                    len(get_data("Customers", limit=100, page=1, where="CustomerID"))
+                    / 3
+                ),
             )
         )
         cards_list = make_cards_customers(window, canvas, page, where="CustomerID")
