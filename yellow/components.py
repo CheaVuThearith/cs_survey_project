@@ -124,11 +124,11 @@ class info_card:
             "Reserved": lambda: reserved_table(
                 window=self.window,
                 status=self.obj["Status"],
-                endTime=find_reservation_data(TableID=self.obj["TableID"])[
-                    "EndTime"
-                ],
+                endTime=str(
+                    find_reservation_data(TableID=self.obj["TableID"])[0]["EndTime"]
+                ),
                 capacity=self.obj["Capacity"],
-                reservedBy=find_reservation_data(TableID=self.obj["TableID"])[
+                reservedBy=find_reservation_data(TableID=self.obj["TableID"])[0][
                     "Name"
                 ],
                 tableID=self.obj["TableID"],
@@ -141,17 +141,15 @@ class info_card:
             "Occupied": lambda: occupied_table(
                 window=self.window,
                 status=self.obj["Status"],
-                endTime=find_reservation_data(TableID=self.obj["TableID"])[
-                    "EndTime"
-                ],
+                endTime=str(
+                    find_reservation_data(TableID=self.obj["TableID"])[0]["EndTime"]
+                ),
                 capacity=self.obj["Capacity"],
-                reservedBy=find_reservation_data(TableID=self.obj["TableID"])[
+                reservedBy=find_reservation_data(TableID=self.obj["TableID"])[0][
                     "Name"
                 ],
-                tableID=self.obj["TableID"],
             ),
         }
-
         more_info_button_x = background_x + 251.0
         more_info_button_y = background_y - 14.0
         more_info_button = Button(

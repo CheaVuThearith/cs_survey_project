@@ -75,5 +75,8 @@ def find_reservation_data(TableID):
     command = f"select Name, EndTime FROM Reservations INNER JOIN Tables ON Reservations.TableID = Tables.TableID INNER JOIN Customers ON Reservations.CustomerID = Customers.CustomerID Where Reservations.TableID = {TableID}"
     cur.execute(command)
     conn.close()
-    out = cur.fetchall() 
+    out = cur.fetchall()
+    print(out)
     return out
+
+

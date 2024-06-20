@@ -21,7 +21,10 @@ def clear_window(window):
 
 
 def create_window():
-    return Tk()
+    window = Tk()
+    window.geometry("960x540")
+    window.configure(bg="#F1F1F1")
+    return window
 
 
 def navigate(window, destination):

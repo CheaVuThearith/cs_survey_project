@@ -51,9 +51,6 @@ def tables_page(window, canvas: Canvas):
     def relative_to_assets(path: str) -> Path:
         return ASSETS_PATH / Path(path)
 
-    window.geometry("960x540")
-    window.configure(bg="#F1F1F1")
-
     canvas.place(x=0, y=0)
     image_image_1 = PhotoImage(file=relative_to_assets("image_1.png"))
     image_1 = canvas.create_image(49.0, 265.0, image=image_image_1)
@@ -178,9 +175,6 @@ def customers_page(window, canvas: Canvas):
 
     def relative_to_assets(path: str) -> Path:
         return ASSETS_PATH / Path(path)
-
-    window.geometry("960x540")
-    window.configure(bg="#F1F1F1")
 
     canvas.place(x=0, y=0)
     image_image_1 = PhotoImage(file=relative_to_assets("image_1.png"))
