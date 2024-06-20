@@ -1,6 +1,8 @@
 from pathlib import Path
 from tkinter import Tk, Canvas, Button, PhotoImage
 
+from sql_integration import cancle_reservation, check_in
+
 
 def reserved_table(window: Tk, status, endTime, reservedBy, capacity, tableID):
     OUTPUT_PATH = Path(__file__).parent
@@ -99,7 +101,7 @@ def reserved_table(window: Tk, status, endTime, reservedBy, capacity, tableID):
         image=button_image_1,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("button_1 clicked"),
+        command=lambda: check_in(tableID),
         relief="flat",
     )
     button_1.place(
@@ -111,7 +113,7 @@ def reserved_table(window: Tk, status, endTime, reservedBy, capacity, tableID):
         image=button_image_2,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("button_2 clicked"),
+        command=lambda: cancle_reservation(tableID),
         relief="flat",
     )
     button_2.place(

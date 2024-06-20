@@ -86,7 +86,8 @@ StatusTypes = Literal["Checked In", "Checked Out", "Reserved", "Occupied", "Vaca
 def update_status(what: StatusTables, Status: StatusTypes, ID):
     conn = make_connection()
     cur: Cursor = conn.cursor(DictCursor)
-    command = f"update {what}s set Status = {Status} where {what}ID = {ID}"
+    command = f"update {what}s set Status = '{Status}' where {what}ID = {ID}"
+    print(command)
     cur.execute(command)
     conn.commit()
     conn.close()
