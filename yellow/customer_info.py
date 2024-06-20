@@ -78,7 +78,7 @@ def customer_info(
         40.0,
         211.5,
         anchor="nw",
-        text=f"Times Canceled: {TimesCancelled}",
+        text=f"Times Cancelled: {TimesCancelled}",
         fill="#232121",
         font=("Inter", 12 * -1),
     )

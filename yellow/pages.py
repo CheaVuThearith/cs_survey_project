@@ -133,6 +133,8 @@ def tables_page(window, canvas: Canvas):
     def paginate_tables(backwards):
         nonlocal cards_list
         nonlocal current_page
+        search = entry_text.get()
+        where = f"TableID LIKE '%{search}%' or Capacity LIKE '%{search}%' or Status LIKE '%{search}%'"
         delete_cards(cards_list)
         page = (
             max(current_page - 1, 1)
@@ -140,11 +142,11 @@ def tables_page(window, canvas: Canvas):
             else min(
                 current_page + 1,
                 math.ceil(
-                    len(get_data("Tables", limit=100, page=1, where="TableID")) / 3
+                    len(get_data("Tables", limit=100, page=1, where=where)) / 3
                 ),
             )
         )
-        cards_list = make_cards_tables(window, canvas, page, where="TableID")
+        cards_list = make_cards_tables(window, canvas, page, where=where)
         current_page = page
 
     button_image_7 = PhotoImage(file=relative_to_assets("button_7.png"))
@@ -258,6 +260,8 @@ def customers_page(window, canvas: Canvas):
     def paginate_customers(backwards):
         nonlocal cards_list
         nonlocal current_page
+        search = entry_text.get()
+        where = f"CustomerID LIKE '%{search}%' or Name LIKE '%{search}%' or PhoneNumber LIKE '%{search}%' or Status LIKE '%{search}%' or TimesCancelled LIKE '%{search}%' or AmountSpent LIKE '%{search}%'"
         delete_cards(cards_list)
         page = (
             max(current_page - 1, 1)
@@ -265,12 +269,11 @@ def customers_page(window, canvas: Canvas):
             else min(
                 current_page + 1,
                 math.ceil(
-                    len(get_data("Customers", limit=100, page=1, where="CustomerID"))
-                    / 3
+                    len(get_data("Customers", limit=100, page=1, where=where)) / 3
                 ),
             )
         )
-        cards_list = make_cards_customers(window, canvas, page, where="CustomerID")
+        cards_list = make_cards_customers(window, canvas, page, where=where)
         current_page = page
 
     button_image_7 = PhotoImage(file=relative_to_assets("button_7.png"))

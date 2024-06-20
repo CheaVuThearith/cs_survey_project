@@ -1,6 +1,8 @@
 from pathlib import Path
 from tkinter import Tk, Canvas, Entry, Button, PhotoImage
 
+from sql_integration import check_out
+
 
 def occupied_table(window: Tk, tableID, capacity, status, reservedBy, endTime):
     window_width = 960
@@ -24,13 +26,18 @@ def occupied_table(window: Tk, tableID, capacity, status, reservedBy, endTime):
         highlightthickness=0,
         relief="ridge",
     )
+
+    def check_out_close():
+        check_out(tableID, int(entry_1.get()))
+        close_overlay()
+
     canvas.place(x=0, y=0)
     button_image_1 = PhotoImage(file=relative_to_assets("button_1.png"))
     button_1 = Button(
         image=button_image_1,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("button_1 clicked"),
+        command=lambda: check_out_close(),
         relief="flat",
     )
     button_1.place(
@@ -53,7 +60,12 @@ def occupied_table(window: Tk, tableID, capacity, status, reservedBy, endTime):
     image_2 = canvas.create_image(48.0, 82.0, image=image_image_2)
 
     canvas.create_text(
-        66.0, 75.0, anchor="nw", text=f"{capacity}", fill="#232121", font=("Inter", 12 * -1)
+        66.0,
+        75.0,
+        anchor="nw",
+        text=f"{capacity}",
+        fill="#232121",
+        font=("Inter", 12 * -1),
     )
 
     canvas.create_text(

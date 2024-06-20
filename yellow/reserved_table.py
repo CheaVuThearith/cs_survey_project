@@ -101,19 +101,24 @@ def reserved_table(window: Tk, status, endTime, reservedBy, capacity, tableID):
         image=button_image_1,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: check_in(tableID),
+        command=lambda: close_overlay_after(check_in(tableID)),
         relief="flat",
     )
     button_1.place(
         x=overlay_x + 112.0, y=overlay_y + 268.0 + 100, width=173.0, height=29.0
     )
 
+    def close_overlay_after(x):
+        x
+        close_overlay()
+        
+
     button_image_2 = PhotoImage(file=relative_to_assets("button_2.png"))
     button_2 = Button(
         image=button_image_2,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: cancle_reservation(tableID),
+        command=lambda: close_overlay_after(cancle_reservation(tableID)),
         relief="flat",
     )
     button_2.place(

@@ -87,48 +87,51 @@ def update_status(what: StatusTables, Status: StatusTypes, ID):
     conn = make_connection()
     cur: Cursor = conn.cursor(DictCursor)
     command = f"update {what}s set Status = '{Status}' where {what}ID = {ID}"
-    print(command)
     cur.execute(command)
+    conn.commit()
+    conn.close()
+
+
+getAndSetTypes = Literal["TimesVisited", "AmountSpent", "TimesCancelled"]
+
+
+def get_and_set(what: getAndSetTypes, CustomerID, incrementValue=1):
+    conn = make_connection()
+    cur: Cursor = conn.cursor()
+    getPrev = f"select {what} from Customers where CustomerID = {CustomerID}"
+    cur.execute(getPrev)
+    prev = cur.fetchone()
+
+    setPrev = f"update Customers set {what} = {prev[0] + incrementValue} where CustomerID = {CustomerID}"
+    cur.execute(setPrev)
+
     conn.commit()
     conn.close()
 
 
 def get_and_update_customer_info(amountSpent, CustomerID):
     conn = make_connection()
-    cur: Cursor = conn.cursor(DictCursor)
+    cur: Cursor = conn.cursor()
 
-    # get prevSpent
-    getSpentCommand = (
-        f"select AmountSpent from Customers where CustomerID = {CustomerID}"
-    )
-    cur.execute(getSpentCommand)
-    prevAmountSpent = cur.fetchone()
+    get_and_set("AmountSpent", CustomerID, amountSpent)
 
-    # set newSpent
-    setSpentCommand = f"update Customers set AmountSpent = {prevAmountSpent + amountSpent} where CustomerID = {CustomerID}"
-    cur.execute(setSpentCommand)
-
-    # update lastVisited
     lastVisitCommand = (
         f"update Customers set LastVisited = now() where CustomerID = {CustomerID}"
     )
     cur.execute(lastVisitCommand)
+    conn.commit()
+    conn.close()
 
-    # get prevTimesVisited
-    getPrevTimesCommand = (
-        f"select TimesVisited from Customers where CustomerID = {CustomerID}"
-    )
-    cur.execute(getPrevTimesCommand)
-    prevTimesVisited = cur.fetchone()
+    get_and_set("TimesVisited", CustomerID, 1)
 
-    # set newTimesVisited
-    setPrevTimesCommand = f"update Customers set TimesVisited = {prevTimesVisited + 1} where CustomerID = {CustomerID}"
-    cur.execute(setPrevTimesCommand)
+    delete_reservation(CustomerID)
 
-    # delete reservation
-    deleteCommand = f"delete from Reservations CustomerID = {CustomerID}"
+
+def delete_reservation(CustomerID):
+    conn = make_connection()
+    cur: Cursor = conn.cursor(DictCursor)
+    deleteCommand = f"delete from Reservations where CustomerID = {CustomerID}"
     cur.execute(deleteCommand)
-
     conn.commit()
     conn.close()
 
@@ -147,22 +150,10 @@ def check_out(TableID, amountSpent):
     update_status("Table", "Vacant", TableID)
     get_and_update_customer_info(amountSpent, CustomerID)
 
-# TODO:test this
+
 def cancle_reservation(TableID):
     obj = find_reservation_data(TableID)
     CustomerID = obj["CustomerID"]
     update_status("Table", "Vacant", CustomerID)
-    getTimesCancelled = (
-        f"select TimesCancelled from Customers where CustomerID = {CustomerID}"
-    )
-    conn = make_connection()
-    cur: Cursor = conn.cursor(DictCursor)
-
-    cur.execute(getTimesCancelled)
-    prevTimesCancelled = cur.fetchone()
-
-    # set newTimesVisited
-    setPrevTimesCommand = f"update Customers set TimesCancelled = {prevTimesCancelled + 1} where CustomerID = {CustomerID}"
-    cur.execute(setPrevTimesCommand)
-    conn.commit()
-    conn.close()
+    get_and_set("TimesCancelled", CustomerID, 1)
+    delete_reservation(CustomerID)
