@@ -28,7 +28,7 @@ def occupied_table(window: Tk, tableID, capacity, status, reservedBy, endTime):
     )
 
     def check_out_close():
-        check_out(tableID, int(entry_1.get()))
+        check_out(tableID, float(entry_1.get()))
         close_overlay()
 
     canvas.place(x=0, y=0)
