@@ -92,6 +92,7 @@ def update_status(what: StatusTables, Status: StatusTypes, ID):
     conn.commit()
     conn.close()
 
+
 def get_and_update_customer_info(amountSpent, CustomerID):
     conn = make_connection()
     cur: Cursor = conn.cursor(DictCursor)
@@ -131,6 +132,7 @@ def get_and_update_customer_info(amountSpent, CustomerID):
     conn.commit()
     conn.close()
 
+
 def check_in(TableID):
     obj = find_reservation_data(TableID)
     CustomerID = obj["CustomerID"]
@@ -145,11 +147,11 @@ def check_out(TableID, amountSpent):
     update_status("Table", "Vacant", TableID)
     get_and_update_customer_info(amountSpent, CustomerID)
 
-
+# TODO:test this
 def cancle_reservation(TableID):
     obj = find_reservation_data(TableID)
     CustomerID = obj["CustomerID"]
-    update_status("Table", "Checked Out", CustomerID)
+    update_status("Table", "Vacant", CustomerID)
     getTimesCancelled = (
         f"select TimesCancelled from Customers where CustomerID = {CustomerID}"
     )
