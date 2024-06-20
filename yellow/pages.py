@@ -230,7 +230,7 @@ def customers_page(window, canvas: Canvas):
         nonlocal cards_list
         nonlocal current_page
         search = entry_text.get()
-        where = f"CustomerID LIKE '%{search}%' or Name LIKE '%{search}%' or PhoneNumber LIKE '%{search}%' or Status LIKE '%{search}%' or TimesCanceled LIKE '%{search}%' or AmountSpent LIKE '%{search}%'"
+        where = f"CustomerID LIKE '%{search}%' or Name LIKE '%{search}%' or PhoneNumber LIKE '%{search}%' or Status LIKE '%{search}%' or TimesCancelled LIKE '%{search}%' or AmountSpent LIKE '%{search}%'"
         delete_cards(cards_list)
         cards_list = make_cards_customers(window, canvas, 1, where)
         current_page = 1

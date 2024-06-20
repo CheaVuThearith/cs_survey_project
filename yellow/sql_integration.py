@@ -16,7 +16,7 @@ class Customer_Type:
     PhoneNumber: str
     Status: str
     TimesVisited: int
-    TimesCanceled: int
+    TimesCancelled: int
     AmountSpent: int
 
 
@@ -72,11 +72,94 @@ def get_data(
 def find_reservation_data(TableID):
     conn = make_connection()
     cur: Cursor = conn.cursor(DictCursor)
-    command = f"select Name, EndTime FROM Reservations INNER JOIN Tables ON Reservations.TableID = Tables.TableID INNER JOIN Customers ON Reservations.CustomerID = Customers.CustomerID Where Reservations.TableID = {TableID}"
+    command = f"select Name, EndTime, Reservations.CustomerID FROM Reservations INNER JOIN Tables ON Reservations.TableID = Tables.TableID INNER JOIN Customers ON Reservations.CustomerID = Customers.CustomerID Where Reservations.TableID = {TableID}"
     cur.execute(command)
     conn.close()
-    out = cur.fetchall()
-    print(out)
+    out = cur.fetchone()
     return out
 
 
+StatusTables = Literal["Customer", "Table"]
+StatusTypes = Literal["Checked In", "Checked Out", "Reserved", "Occupied", "Vacant"]
+
+
+def update_status(what: StatusTables, Status: StatusTypes, ID):
+    conn = make_connection()
+    cur: Cursor = conn.cursor(DictCursor)
+    command = f"update {what}s set Status = {Status} where {what}ID = {ID}"
+    cur.execute(command)
+    conn.commit()
+    conn.close()
+
+def get_and_update_customer_info(amountSpent, CustomerID):
+    conn = make_connection()
+    cur: Cursor = conn.cursor(DictCursor)
+
+    # get prevSpent
+    getSpentCommand = (
+        f"select AmountSpent from Customers where CustomerID = {CustomerID}"
+    )
+    cur.execute(getSpentCommand)
+    prevAmountSpent = cur.fetchone()
+
+    # set newSpent
+    setSpentCommand = f"update Customers set AmountSpent = {prevAmountSpent + amountSpent} where CustomerID = {CustomerID}"
+    cur.execute(setSpentCommand)
+
+    # update lastVisited
+    lastVisitCommand = (
+        f"update Customers set LastVisited = now() where CustomerID = {CustomerID}"
+    )
+    cur.execute(lastVisitCommand)
+
+    # get prevTimesVisited
+    getPrevTimesCommand = (
+        f"select TimesVisited from Customers where CustomerID = {CustomerID}"
+    )
+    cur.execute(getPrevTimesCommand)
+    prevTimesVisited = cur.fetchone()
+
+    # set newTimesVisited
+    setPrevTimesCommand = f"update Customers set TimesVisited = {prevTimesVisited + 1} where CustomerID = {CustomerID}"
+    cur.execute(setPrevTimesCommand)
+
+    # delete reservation
+    deleteCommand = f"delete from Reservations CustomerID = {CustomerID}"
+    cur.execute(deleteCommand)
+
+    conn.commit()
+    conn.close()
+
+def check_in(TableID):
+    obj = find_reservation_data(TableID)
+    CustomerID = obj["CustomerID"]
+    update_status("Customer", "Checked In", CustomerID)
+    update_status("Table", "Occupied", TableID)
+
+
+def check_out(TableID, amountSpent):
+    obj = find_reservation_data(TableID)
+    CustomerID = obj["CustomerID"]
+    update_status("Customer", "Checked Out", CustomerID)
+    update_status("Table", "Vacant", TableID)
+    get_and_update_customer_info(amountSpent, CustomerID)
+
+
+def cancle_reservation(TableID):
+    obj = find_reservation_data(TableID)
+    CustomerID = obj["CustomerID"]
+    update_status("Table", "Checked Out", CustomerID)
+    getTimesCancelled = (
+        f"select TimesCancelled from Customers where CustomerID = {CustomerID}"
+    )
+    conn = make_connection()
+    cur: Cursor = conn.cursor(DictCursor)
+
+    cur.execute(getTimesCancelled)
+    prevTimesCancelled = cur.fetchone()
+
+    # set newTimesVisited
+    setPrevTimesCommand = f"update Customers set TimesCancelled = {prevTimesCancelled + 1} where CustomerID = {CustomerID}"
+    cur.execute(setPrevTimesCommand)
+    conn.commit()
+    conn.close()

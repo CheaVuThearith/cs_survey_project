@@ -9,9 +9,9 @@ def customer_info(
     name,
     status,
     timesVisited,
-    timesCanceled,
+    TimesCancelled,
     amountSpent,
-    lastVisited:datetime.datetime,
+    lastVisited: datetime.datetime,
 ):
     OUTPUT_PATH = Path(__file__).parent
     ASSETS_PATH = OUTPUT_PATH / "assets/frame5"
@@ -78,7 +78,7 @@ def customer_info(
         40.0,
         211.5,
         anchor="nw",
-        text=f"Times Canceled: {timesCanceled}",
+        text=f"Times Canceled: {TimesCancelled}",
         fill="#232121",
         font=("Inter", 12 * -1),
     )
@@ -99,6 +99,7 @@ def customer_info(
         fill="#232121",
         font=("Inter", 12 * -1),
     )
+
     def close_overlay():
         canvas.destroy()
         x_button.destroy()

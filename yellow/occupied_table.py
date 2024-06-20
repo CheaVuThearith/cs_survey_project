@@ -2,7 +2,7 @@ from pathlib import Path
 from tkinter import Tk, Canvas, Entry, Button, PhotoImage
 
 
-def occupied_table(window: Tk, tableID, capacity, status, reserved_by, endTime):
+def occupied_table(window: Tk, tableID, capacity, status, reservedBy, endTime):
     window_width = 960
     window_height = 540
 
@@ -69,7 +69,7 @@ def occupied_table(window: Tk, tableID, capacity, status, reserved_by, endTime):
         40.0,
         141.0,
         anchor="nw",
-        text=f"Reserved by: {reserved_by}",
+        text=f"Reserved by: {reservedBy}",
         fill="#232121",
         font=("Inter", 12 * -1),
     )

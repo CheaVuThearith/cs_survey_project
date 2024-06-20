@@ -107,7 +107,7 @@ class info_card:
                 lastVisited=self.obj["LastVisited"],
                 name=self.obj["Name"],
                 status=self.obj["Status"],
-                timesCanceled=self.obj["TimesCanceled"],
+                TimesCancelled=self.obj["TimesCancelled"],
                 timesVisited=self.obj["TimesVisited"],
                 window=self.window,
             ),
@@ -117,7 +117,7 @@ class info_card:
                 lastVisited=self.obj["LastVisited"],
                 name=self.obj["Name"],
                 status=self.obj["Status"],
-                timesCanceled=self.obj["TimesCanceled"],
+                TimesCancelled=self.obj["TimesCancelled"],
                 timesVisited=self.obj["TimesVisited"],
                 window=self.window,
             ),
@@ -125,10 +125,10 @@ class info_card:
                 window=self.window,
                 status=self.obj["Status"],
                 endTime=str(
-                    find_reservation_data(TableID=self.obj["TableID"])[0]["EndTime"]
+                    find_reservation_data(TableID=self.obj["TableID"])["EndTime"]
                 ),
                 capacity=self.obj["Capacity"],
-                reservedBy=find_reservation_data(TableID=self.obj["TableID"])[0][
+                reservedBy=find_reservation_data(TableID=self.obj["TableID"])[
                     "Name"
                 ],
                 tableID=self.obj["TableID"],
@@ -139,13 +139,14 @@ class info_card:
                 TableID=self.obj["TableID"],
             ),
             "Occupied": lambda: occupied_table(
+                tableID=self.obj["TableID"],
                 window=self.window,
                 status=self.obj["Status"],
                 endTime=str(
-                    find_reservation_data(TableID=self.obj["TableID"])[0]["EndTime"]
+                    find_reservation_data(TableID=self.obj["TableID"])["EndTime"]
                 ),
                 capacity=self.obj["Capacity"],
-                reservedBy=find_reservation_data(TableID=self.obj["TableID"])[0][
+                reservedBy=find_reservation_data(TableID=self.obj["TableID"])[
                     "Name"
                 ],
             ),
