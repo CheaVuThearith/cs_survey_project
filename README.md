@@ -1,6 +1,6 @@
-# CS Survey Project
+# Restaurant Management Program
 
-Welcome to the CS Survey Project! This project is designed to manage restaurant reservations, customers, tables, and employees. Follow the instructions below to set up and run the project on your local machine.
+Welcome to the Our Restaurant Management Program! This project is designed to manage restaurant reservations, customers, tables, and employees. Follow the instructions below to set up and run the project on your local machine.
 
 ## Prerequisites
 
