@@ -1,6 +1,9 @@
 from pathlib import Path
 from tkinter import Tk, Canvas, Button, PhotoImage
 
+from navigation import overlay
+from registration import reservation_add
+
 
 def vacant_table(window: Tk, capacity, TableID):
     OUTPUT_PATH = Path(__file__).parent
@@ -63,6 +66,10 @@ def vacant_table(window: Tk, capacity, TableID):
         x_button.destroy()
         button_1.destroy()
 
+    def to_add_page():
+        close_overlay()
+        overlay(window, reservation_add(window, TableID))
+
     x_button_image = PhotoImage(file=relative_to_assets("Framexicon.png"))
     x_button = Button(
         image=x_button_image,
@@ -79,7 +86,7 @@ def vacant_table(window: Tk, capacity, TableID):
         image=button_image_1,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print(window_width),
+        command=lambda: to_add_page(),
         relief="flat",
     )
     button_1.place(

@@ -14,7 +14,7 @@ def customer_info(
     lastVisited: datetime.datetime,
 ):
     OUTPUT_PATH = Path(__file__).parent
-    ASSETS_PATH = OUTPUT_PATH / "assets/frame5"
+    ASSETS_PATH = OUTPUT_PATH / "yellow_assets/frame5"
 
     def relative_to_assets(path: str) -> Path:
         return ASSETS_PATH / Path(path)
