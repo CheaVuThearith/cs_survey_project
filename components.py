@@ -8,7 +8,7 @@ from reserved_table import reserved_table
 from vacant_table import vacant_table
 from sql_integration import find_reservation_data
 
-custom_path = Path(__file__).parent / "assets" / "info_card"
+custom_path = Path(__file__).parent / "yellow_assets" / "info_card"
 
 
 def relative_to_assets(file):

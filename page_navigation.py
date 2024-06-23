@@ -6,8 +6,8 @@ def create_canvas(window):
     canvas = Canvas(
         window,
         bg="#F1F1F1",
-        height=540,
         width=960,
+        height=540,
         bd=0,
         highlightthickness=0,
         relief="ridge",

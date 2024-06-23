@@ -1,21 +1,21 @@
 from pathlib import Path
-from tkinter import Tk, Canvas, Button, PhotoImage
+from tkinter import Tk, Canvas, Entry, Button, PhotoImage
 
-from sql_integration import cancle_reservation, check_in
+from sql_integration import check_out
 
 
-def reserved_table(window: Tk, status, endTime, reservedBy, capacity, tableID):
-    OUTPUT_PATH = Path(__file__).parent
-    ASSETS_PATH = OUTPUT_PATH / Path(r"assets\frame2")
-
-    def relative_to_assets(path: str) -> Path:
-        return ASSETS_PATH / Path(path)
-
+def occupied_table(window: Tk, tableID, capacity, status, reservedBy, endTime):
     window_width = 960
     window_height = 540
 
     overlay_x = (window_width - 609) / 2
     overlay_y = (window_height - 337) / 2
+
+    OUTPUT_PATH = Path(__file__).parent
+    ASSETS_PATH = OUTPUT_PATH / Path(r"yellow_assets\frame3")
+
+    def relative_to_assets(path: str) -> Path:
+        return ASSETS_PATH / Path(path)
 
     canvas = Canvas(
         window,
@@ -27,7 +27,23 @@ def reserved_table(window: Tk, status, endTime, reservedBy, capacity, tableID):
         relief="ridge",
     )
 
+    def check_out_close():
+        check_out(tableID, float(entry_1.get()))
+        close_overlay()
+
     canvas.place(x=0, y=0)
+    button_image_1 = PhotoImage(file=relative_to_assets("button_1.png"))
+    button_1 = Button(
+        image=button_image_1,
+        borderwidth=0,
+        highlightthickness=0,
+        command=lambda: check_out_close(),
+        relief="flat",
+    )
+    button_1.place(
+        x=324.0 + overlay_x, y=268.0 + 100 + overlay_y, width=125.0, height=29.0
+    )
+
     image_image_1 = PhotoImage(file=relative_to_assets("image_1.png"))
     image_1 = canvas.create_image(48.0, 47.119384765625, image=image_image_1)
 
@@ -56,7 +72,7 @@ def reserved_table(window: Tk, status, endTime, reservedBy, capacity, tableID):
         40.0,
         108.0,
         anchor="nw",
-        text=f"Status: {status}",
+        text=f"Status: {status} ",
         fill="#232121",
         font=("Inter", 12 * -1),
     )
@@ -83,7 +99,7 @@ def reserved_table(window: Tk, status, endTime, reservedBy, capacity, tableID):
         canvas.destroy()
         x_button.destroy()
         button_1.destroy()
-        button_2.destroy()
+        entry_1.destroy()
 
     x_button_image = PhotoImage(file=relative_to_assets("Framexicon.png"))
     x_button = Button(
@@ -94,34 +110,17 @@ def reserved_table(window: Tk, status, endTime, reservedBy, capacity, tableID):
         command=lambda: close_overlay(),
         relief="flat",
     )
-    x_button.place(x=904, y=36, width=24, height=24)
+    x_button.place(x=904, y=30, width=24, height=24)
 
-    button_image_1 = PhotoImage(file=relative_to_assets("button_1.png"))
-    button_1 = Button(
-        image=button_image_1,
-        borderwidth=0,
-        highlightthickness=0,
-        command=lambda: close_overlay_after(check_in(tableID)),
-        relief="flat",
-    )
-    button_1.place(
-        x=overlay_x + 112.0, y=overlay_y + 268.0 + 100, width=173.0, height=29.0
+    image_image_3 = PhotoImage(file=relative_to_assets("image_3.png"))
+    image_3 = canvas.create_image(
+        222.0 + overlay_x, 282.0 + overlay_y + 100, image=image_image_3
     )
 
-    def close_overlay_after(x):
-        x
-        close_overlay()
-        
-
-    button_image_2 = PhotoImage(file=relative_to_assets("button_2.png"))
-    button_2 = Button(
-        image=button_image_2,
-        borderwidth=0,
-        highlightthickness=0,
-        command=lambda: close_overlay_after(cancle_reservation(tableID)),
-        relief="flat",
-    )
-    button_2.place(
-        x=overlay_x + 324.0, y=overlay_y + 268.0 + 100, width=173.0, height=29.0
+    entry_image_1 = PhotoImage(file=relative_to_assets("entry_1.png"))
+    entry_bg_1 = canvas.create_image(226.0, 282.5, image=entry_image_1)
+    entry_1 = Entry(bd=0, bg="#FBFBFB", fg="#000716", highlightthickness=0)
+    entry_1.place(
+        x=204.0 + overlay_x, y=273.0 + overlay_y + 100, width=44.0, height=17.0
     )
     window.mainloop()

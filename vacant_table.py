@@ -4,7 +4,7 @@ from tkinter import Tk, Canvas, Button, PhotoImage
 
 def vacant_table(window: Tk, capacity, TableID):
     OUTPUT_PATH = Path(__file__).parent
-    ASSETS_PATH = OUTPUT_PATH / Path(r"assets\frame4")
+    ASSETS_PATH = OUTPUT_PATH / Path(r"yellow_assets\frame4")
 
     def relative_to_assets(path: str) -> Path:
         return ASSETS_PATH / Path(path)
