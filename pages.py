@@ -314,7 +314,7 @@ from sql_credentials import get_creds
 
 def startwindow(window, canvas):
     OUTPUT_PATH = Path(__file__).parent
-    ASSETS_PATH = OUTPUT_PATH / Path(r"green_assets\frame2")
+    ASSETS_PATH = OUTPUT_PATH / Path(r"green_assets/frame2")
 
     def relative_to_assets(path: str) -> Path:
         return ASSETS_PATH / Path(path)
@@ -393,14 +393,14 @@ def staffregistration(window, canvas):
         return ASSETS_PATH / Path(path)
 
     def button_click():
-        gender = "Male" or "Female"
+        gender = ["Male" ,"Female"]
         if entry_2.get() == "":
             messagebox.showerror("Alert", "Please enter your first name")
         elif entry_5.get() == "":
             messagebox.showerror("Alert", "Please enter your last name")
         elif entry_3.get() == "":
             messagebox.showerror("Alert", "Please enter your gender")
-        elif entry_3.get() != gender:
+        elif entry_3.get() not in gender:
             messagebox.showerror("Alert", "Please enter Male or Female")
         elif entry_4.get() == "":
             messagebox.showerror("Alert", "Please enter your position")
