@@ -6,7 +6,7 @@ from sql_integration import cancle_reservation, check_in
 
 def reserved_table(window: Tk, status, endTime, reservedBy, capacity, tableID):
     OUTPUT_PATH = Path(__file__).parent
-    ASSETS_PATH = OUTPUT_PATH / Path(r"yellow_assets\frame2")
+    ASSETS_PATH = OUTPUT_PATH / Path(r"yellow_assets/frame2")
 
     def relative_to_assets(path: str) -> Path:
         return ASSETS_PATH / Path(path)

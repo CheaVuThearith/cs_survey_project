@@ -12,7 +12,7 @@ def occupied_table(window: Tk, tableID, capacity, status, reservedBy, endTime):
     overlay_y = (window_height - 337) / 2
 
     OUTPUT_PATH = Path(__file__).parent
-    ASSETS_PATH = OUTPUT_PATH / Path(r"yellow_assets\frame3")
+    ASSETS_PATH = OUTPUT_PATH / Path(r"yellow_assets/frame3")
 
     def relative_to_assets(path: str) -> Path:
         return ASSETS_PATH / Path(path)
