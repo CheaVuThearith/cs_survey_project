@@ -89,6 +89,7 @@ def update_status(what: StatusTables, Status: StatusTypes, ID):
     command = f"update {what}s set Status = '{Status}' where {what}ID = {ID}"
     cur.execute(command)
     conn.commit()
+    cur.execute(f"select * from {what}s where {what}ID = {ID}")
     conn.close()
 
 
@@ -154,6 +155,6 @@ def check_out(TableID, amountSpent):
 def cancle_reservation(TableID):
     obj = find_reservation_data(TableID)
     CustomerID = obj["CustomerID"]
-    update_status("Table", "Vacant", CustomerID)
+    update_status("Table", "Vacant", TableID)
     get_and_set("TimesCancelled", CustomerID, 1)
     delete_reservation(CustomerID)
